@@ -6,24 +6,18 @@ from main import BooksCollector
 class TestBooksCollector:
 
     @pytest.mark.parametrize('book_name', ['Я', 'А' * 40])
-    def test_add_new_book_valid_name_book_added(self, book_name):
-        collector = BooksCollector()
-
+    def test_add_new_book_valid_name_book_added(self, collector, book_name):
         collector.add_new_book(book_name)
 
         assert book_name in collector.get_books_genre()
 
     @pytest.mark.parametrize('book_name', ['', 'А' * 41])
-    def test_add_new_book_invalid_name_book_not_added(self, book_name):
-        collector = BooksCollector()
-
+    def test_add_new_book_invalid_name_book_not_added(self, collector, book_name):
         collector.add_new_book(book_name)
 
         assert collector.get_books_genre() == {}
 
-    def test_add_new_book_same_book_twice_added_once(self):
-        collector = BooksCollector()
-
+    def test_add_new_book_same_book_twice_added_once(self, collector):
         collector.add_new_book('Дюна')
         collector.add_new_book('Дюна')
 
@@ -37,7 +31,7 @@ class TestBooksCollector:
             ('Шерлок Холмс', 'Детективы'),
         ]
     )
-    def test_set_book_genre_valid_genre_genre_set(self, book_name, genre):
+    def test_set_book_genre_valid_genre_genre_set(self, collector, book_name, genre):
         collector = BooksCollector()
         collector.add_new_book(book_name)
 
@@ -45,13 +39,13 @@ class TestBooksCollector:
 
         assert collector.get_book_genre(book_name) == genre
 
-    def test_get_book_genre_new_book_genre_is_empty(self):
+    def test_get_book_genre_new_book_genre_is_empty(self, collector):
         collector = BooksCollector()
         collector.add_new_book('Дюна')
 
         assert collector.get_book_genre('Дюна') == ''
 
-    def test_get_books_with_specific_genre_returns_only_books_of_selected_genre(self):
+    def test_get_books_with_specific_genre_returns_only_books_of_selected_genre(self, collector):
         collector = BooksCollector()
         collector.add_new_book('Дюна')
         collector.add_new_book('Марсианин')
@@ -64,7 +58,7 @@ class TestBooksCollector:
 
         assert books == ['Дюна', 'Марсианин']
 
-    def test_get_books_for_children_age_rating_books_not_returned(self):
+    def test_get_books_for_children_age_rating_books_not_returned(self, collector):
         collector = BooksCollector()
         collector.add_new_book('Винни-Пух')
         collector.add_new_book('Оно')
@@ -77,7 +71,7 @@ class TestBooksCollector:
 
         assert books == ['Винни-Пух']
 
-    def test_add_book_in_favorites_same_book_twice_added_once(self):
+    def test_add_book_in_favorites_same_book_twice_added_once(self, collector):
         collector = BooksCollector()
         collector.add_new_book('Дюна')
 
@@ -86,7 +80,7 @@ class TestBooksCollector:
 
         assert collector.get_list_of_favorites_books() == ['Дюна']
 
-    def test_delete_book_from_favorites_added_book_book_deleted(self):
+    def test_delete_book_from_favorites_added_book_book_deleted(self, collector):
         collector = BooksCollector()
         collector.add_new_book('Дюна')
         collector.add_book_in_favorites('Дюна')
@@ -95,7 +89,7 @@ class TestBooksCollector:
 
         assert 'Дюна' not in collector.get_list_of_favorites_books()
 
-    def test_get_list_of_favorites_books_returns_added_books(self):
+    def test_get_list_of_favorites_books_returns_added_books(self, collector):
         collector = BooksCollector()
         collector.add_new_book('Дюна')
         collector.add_new_book('Марсианин')
