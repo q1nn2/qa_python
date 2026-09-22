@@ -32,7 +32,6 @@ class TestBooksCollector:
         ]
     )
     def test_set_book_genre_valid_genre_genre_set(self, collector, book_name, genre):
-        collector = BooksCollector()
         collector.add_new_book(book_name)
 
         collector.set_book_genre(book_name, genre)
@@ -40,13 +39,11 @@ class TestBooksCollector:
         assert collector.get_book_genre(book_name) == genre
 
     def test_get_book_genre_new_book_genre_is_empty(self, collector):
-        collector = BooksCollector()
         collector.add_new_book('Дюна')
 
         assert collector.get_book_genre('Дюна') == ''
 
     def test_get_books_with_specific_genre_returns_only_books_of_selected_genre(self, collector):
-        collector = BooksCollector()
         collector.add_new_book('Дюна')
         collector.add_new_book('Марсианин')
         collector.add_new_book('Оно')
@@ -59,7 +56,6 @@ class TestBooksCollector:
         assert books == ['Дюна', 'Марсианин']
 
     def test_get_books_for_children_age_rating_books_not_returned(self, collector):
-        collector = BooksCollector()
         collector.add_new_book('Винни-Пух')
         collector.add_new_book('Оно')
         collector.add_new_book('Шерлок Холмс')
@@ -72,7 +68,6 @@ class TestBooksCollector:
         assert books == ['Винни-Пух']
 
     def test_add_book_in_favorites_same_book_twice_added_once(self, collector):
-        collector = BooksCollector()
         collector.add_new_book('Дюна')
 
         collector.add_book_in_favorites('Дюна')
@@ -81,7 +76,6 @@ class TestBooksCollector:
         assert collector.get_list_of_favorites_books() == ['Дюна']
 
     def test_delete_book_from_favorites_added_book_book_deleted(self, collector):
-        collector = BooksCollector()
         collector.add_new_book('Дюна')
         collector.add_book_in_favorites('Дюна')
 
@@ -90,7 +84,6 @@ class TestBooksCollector:
         assert 'Дюна' not in collector.get_list_of_favorites_books()
 
     def test_get_list_of_favorites_books_returns_added_books(self, collector):
-        collector = BooksCollector()
         collector.add_new_book('Дюна')
         collector.add_new_book('Марсианин')
         collector.add_book_in_favorites('Дюна')
